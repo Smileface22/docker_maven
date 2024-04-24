@@ -8,7 +8,7 @@ RUN apt-get update
 RUN apt-get install -y maven
 RUN rm -rf /var/lib/apt/lists/*
 
-COPY ./docker_maven /usr/src/app
+COPY ./untitled /usr/src/app
 WORKDIR /usr/src/app
 RUN mvn clean install
 
