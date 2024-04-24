@@ -1,11 +1,15 @@
-FROM maven:3.8.4-openjdk-17 AS build
-WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline
-COPY src ./src
-RUN mvn package
+FROM openjdk:11
 
-FROM openjdk:17-jdk-alpine
-WORKDIR /app
-COPY --from=build /app/target/*.jar ./app.jar
-CMD ["java", "-jar", "app.jar"]
+ENV MAVEN_HOME /usr/share/maven
+ENV MAVEN_VERSION 3.9.2
+ENV PATH $MAVEN_HOME/bin:$PATH
+
+RUN apt-get update
+RUN apt-get install -y maven
+RUN rm -rf /var/lib/apt/lists/*
+
+COPY ./docker_maven /usr/src/app
+WORKDIR /usr/src/app
+RUN mvn clean install
+
+CMD ["java", "-jar", "target/docker_maven-1.0-SNAPSHOT.jar"]
