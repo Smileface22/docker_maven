@@ -12,4 +12,4 @@ COPY ./untitled /usr/src/app
 WORKDIR /usr/src/app
 RUN mvn clean install
 
-CMD ["java", "-jar", "target/docker_maven-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/untitled-1.0-SNAPSHOT.jar"]
